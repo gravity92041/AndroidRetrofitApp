@@ -1,6 +1,8 @@
 package com.example.apiapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -63,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 List<Charact> limitedList = characts.subList(0,Math.min(characts.size(),limit));
                 adapter = new CharacterAdapter(MainActivity.this, limitedList);
                 recyclerView.setAdapter(adapter);
+                adapter.setOnCharacterClickListener(new CharacterAdapter.OnCharactClickListener() {
+                    @Override
+                    public void onCharactClick(String characterId) {
+                        Intent intent = new Intent(MainActivity.this,CharacterDetailActivity.class);
+                        intent.putExtra("character_id",characterId);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -74,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
     }
 }
 

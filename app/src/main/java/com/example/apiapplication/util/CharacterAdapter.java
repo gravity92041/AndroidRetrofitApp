@@ -25,6 +25,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         this.context = context;
         this.characts = characts;
     }
+    public interface OnCharactClickListener {
+        void onCharactClick(String characterId);
+    }
+    private OnCharactClickListener listener;
+
+    public void setOnCharacterClickListener(OnCharactClickListener listener) {
+        this.listener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -39,9 +48,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
 
         holder.nameTextView.setText(charact.getName());
         holder.houseTextView.setText(charact.getHouse());
-
-        // Используйте Picasso для загрузки изображений из URL
         Picasso.get().load(charact.getImage()).into(holder.imageView);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener!=null){
+                    listener.onCharactClick(charact.getId());
+                }
+            }
+        });
     }
 
     @Override

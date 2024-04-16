@@ -1,9 +1,10 @@
 package com.example.apiapplication.model;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Charact {
+public class Charact implements Serializable {
     private String id;
     private String name;
     private List<String> alternate_names;
