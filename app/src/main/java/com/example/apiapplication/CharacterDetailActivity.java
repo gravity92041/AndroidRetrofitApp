@@ -58,11 +58,15 @@ public class CharacterDetailActivity extends AppCompatActivity {
 
                 List<Charact> charact = response.body();
                 Charact character = charact.get(0);
+
                 if (character.getGender().equals("female")){
                     actorTextView.setText("Играющая актриса: " + character.getActor());
                 }
                 else {
                     actorTextView.setText("Играющий актер: "+ character.getActor());
+                }
+                if (character.getSpecies().equals("cat")){
+                    actorTextView.setText("Играющие кошки: " + character.getActor());
                 }
                 nameTextView.setText("Имя: "+ character.getName());
                 houseTextView.setText("Факультет: "+ character.getHouse());
