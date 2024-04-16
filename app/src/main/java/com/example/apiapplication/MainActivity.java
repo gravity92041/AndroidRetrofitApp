@@ -58,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Ошибка: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
-
+                int limit =25;
                 List<Charact> characts = response.body();
-                adapter = new CharacterAdapter(MainActivity.this, characts);
+                List<Charact> limitedList = characts.subList(0,Math.min(characts.size(),limit));
+                adapter = new CharacterAdapter(MainActivity.this, limitedList);
                 recyclerView.setAdapter(adapter);
             }
 
