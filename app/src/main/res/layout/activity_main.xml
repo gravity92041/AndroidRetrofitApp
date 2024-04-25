@@ -4,14 +4,17 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:background="@color/background"
+    android:layout_margin="0dp"
     android:orientation="vertical"
     tools:context="com.example.apiapplication.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+
         android:layout_weight="1" />
 
 </LinearLayout>

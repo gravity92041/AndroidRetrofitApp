@@ -1,5 +1,6 @@
 package com.example.apiapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -26,7 +27,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CharacterDetailActivity extends AppCompatActivity {
     private ImageView imageView2;
-    private TextView nameTextView,houseTextView,actorTextView;
+    private TextView nameTextView,houseTextView,actorTextView,genderTextView,dateOfBirthTextView,
+            wandTextView,isWizardTextView,patronusTextView,alternateNames,actorManOrWomTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,14 @@ public class CharacterDetailActivity extends AppCompatActivity {
         nameTextView = findViewById(R.id.nameTextView);
         houseTextView = findViewById(R.id.houseTextView);
         actorTextView = findViewById(R.id.actorTextView);
+        genderTextView = findViewById(R.id.genderTextView);
+        dateOfBirthTextView = findViewById(R.id.dateOfBirthTextView);
+        wandTextView = findViewById(R.id.wandTextView);
+        isWizardTextView = findViewById(R.id.isWizardTextView);
+        patronusTextView = findViewById(R.id.patronusTextView);
+        alternateNames = findViewById(R.id.alternateNames);
+        actorManOrWomTextView = findViewById(R.id.actorManOrWomTextView);
+
 //        displayCharacterInfo();
 
         String characterId = getIntent().getStringExtra("character_id");
@@ -58,19 +69,53 @@ public class CharacterDetailActivity extends AppCompatActivity {
 
                 List<Charact> charact = response.body();
                 Charact character = charact.get(0);
-
-                if (character.getGender().equals("female")){
-                    actorTextView.setText("Играющая актриса: " + character.getActor());
+                if (character.isWizard()){
+                    isWizardTextView.setText("Да");
                 }
                 else {
-                    actorTextView.setText("Играющий актер: "+ character.getActor());
+                    isWizardTextView.setText("Нет");
+                }
+                if (character.getAlternate_names().isEmpty()){
+                    alternateNames.setText("Нет альтернативных имен");
+                }
+                else {
+                    StringBuilder sb = new StringBuilder();
+                    for (String s: character.getAlternate_names()){
+                        sb.append(s+"; ");
+                    }
+                    alternateNames.setText(sb.toString());
+                }
+                if (character.getGender().equals("female")){
+                    actorManOrWomTextView.setText("Актриса");
+                    actorTextView.setText(character.getActor());
+                }
+                else {
+                    actorManOrWomTextView.setText("Актер");
+                    actorTextView.setText(character.getActor());
                 }
                 if (character.getSpecies().equals("cat")){
-                    actorTextView.setText("Играющие кошки: " + character.getActor());
+                   actorManOrWomTextView.setText("Кошка(и)");
+                   actorTextView.setText(character.getActor());
                 }
-                nameTextView.setText("Имя: "+ character.getName());
-                houseTextView.setText("Факультет: "+ character.getHouse());
+                if (!(character.getWand().getLength()==0.0)){
+                    wandTextView.setText(character.getWand().getWood() +" "+ character.getWand().getCore()+" "+character.getWand().getLength());
+                }
+                else {
+                    wandTextView.setText("-");
+                }
+                if (!character.getHouse().isEmpty()){
+                    houseTextView.setText(character.getHouse());
+                }
+                else {
+                    houseTextView.setText("-");
+                }
+                dateOfBirthTextView.setText(character.getDateOfBirth());
+                nameTextView.setText(character.getName());
+
+                genderTextView.setText(character.getGender());
+
                 Picasso.get().load(character.getImage()).into(imageView2);
+                patronusTextView.setText(character.getPatronus());
                 // Отобразите информацию о персонаже
             }
 
@@ -85,7 +130,7 @@ public class CharacterDetailActivity extends AppCompatActivity {
 //        loadCharacterById(characterId);
     }
     private void displayCharacterInfo() {
-        // В этом примере используется заглушка для изображения и имя персонажа
+  //Заглушка
         String imageUrl = "https://ik.imagekit.io/hpapi/harry.jpg";
         String characterName = "Harry Potter";
 
