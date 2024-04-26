@@ -92,30 +92,30 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterList(newText);
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                filterList(newText);
+//                return true;
+//            }
+//        });
     }
 
-    private void filterList(String newText) {
-        List<Charact> filteredList = new ArrayList<>();
-        for (Charact c:limitedList){
-            if (c.getName().toLowerCase().contains(newText.toLowerCase())){
-                filteredList.add(c);
-            }
-        }
-
-            adapter.setFilteredList(filteredList);
-
-    }
+//    private void filterList(String newText) {
+//        List<Charact> filteredList = new ArrayList<>();
+//        for (Charact c:limitedList){
+//            if (c.getName().toLowerCase().contains(newText.toLowerCase())){
+//                filteredList.add(c);
+//            }
+//        }
+//
+//            adapter.setFilteredList(filteredList);
+//
+//    }
 }
 
