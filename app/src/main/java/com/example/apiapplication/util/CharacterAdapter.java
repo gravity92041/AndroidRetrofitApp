@@ -25,6 +25,12 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.Char
         this.context = context;
         this.characts = characts;
     }
+
+    public void setFilteredList(List<Charact> filteredList){
+        this.characts = filteredList;
+        notifyDataSetChanged();
+    }
+
     public interface OnCharactClickListener {
         void onCharactClick(String characterId);
     }

@@ -3,6 +3,7 @@ package com.example.apiapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -21,6 +22,7 @@ import com.example.apiapplication.model.Charact;
 import com.example.apiapplication.rest.HarryPotterApiService;
 import com.example.apiapplication.util.CharacterAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private CharacterAdapter adapter;
+    private SearchView searchView;
+    List<Charact> limitedList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+
 
         recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 int limit =25;
                 List<Charact> characts = response.body();
-                List<Charact> limitedList = characts.subList(0,Math.min(characts.size(),limit));
+                limitedList = characts.subList(0,Math.min(characts.size(),limit));
                 adapter = new CharacterAdapter(MainActivity.this, limitedList);
                 recyclerView.setAdapter(adapter);
                 adapter.setOnCharacterClickListener(new CharacterAdapter.OnCharactClickListener() {
@@ -84,6 +91,30 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterList(String newText) {
+        List<Charact> filteredList = new ArrayList<>();
+        for (Charact c:limitedList){
+            if (c.getName().toLowerCase().contains(newText.toLowerCase())){
+                filteredList.add(c);
+            }
+        }
+
+            adapter.setFilteredList(filteredList);
 
     }
 }

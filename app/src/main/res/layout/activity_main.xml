@@ -8,6 +8,15 @@
     android:layout_margin="0dp"
     android:orientation="vertical"
     tools:context="com.example.apiapplication.MainActivity">
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/search_view_bg"
+        android:queryHint="Поиск по имени...."
+        android:iconifiedByDefault="false"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
